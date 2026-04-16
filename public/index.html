@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KisanMandi Intelligence | Farmer Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <nav class="navbar glass">
+        <div class="logo">
+            <i class="fa-solid fa-leaf text-green"></i> 
+            <span class="trn" data-trn="logoName">KisanMandi</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="trn" data-trn="navHome">Home</a></li>
+            <li><a href="#dashboard" class="trn" data-trn="navDashboard">Dashboard</a></li>
+            <li><a href="#approach" class="trn" data-trn="navApproach">Tech</a></li>
+            <li><a href="#feasibility" class="trn" data-trn="navFeasibility">Feasibility</a></li>
+            <li><a href="#impact" class="trn" data-trn="navImpact">Impact</a></li>
+            <li><a href="#research" class="trn" data-trn="navResearch">Research</a></li>
+        </ul>
+        <div class="nav-actions">
+            <!-- Dark Mode Toggle -->
+            <button id="themeToggle" class="btn icon-btn" title="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <!-- Voice Button -->
+            <button id="voiceBtn" class="btn icon-btn" title="Voice Search (Hindi/English)">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+            <!-- Language Toggle -->
+            <button id="langToggle" class="btn outline-btn">A/अ</button>
+        </div>
+    </nav>
+
+    <!-- Simulated SMS Alert Toast -->
+    <div id="alertToast" class="toast hidden">
+        <div class="toast-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="toast-body">
+            <h4 class="trn" data-trn="alertTitle">Smart Alert</h4>
+            <p id="alertMessage">Notification content...</p>
+        </div>
+    </div>
+
+    <!-- MAIN SECTIONS (SLIDES) -->
+    
+    <!-- 1. Home Page -->
+    <section id="home" class="slide slide-home">
+        <div class="hero-content">
+            <div class="badge trn" data-trn="themeBadge">Theme: Smart Agriculture</div>
+            <h1 class="trn" data-trn="heroTitle">Farmer Mandi Intelligence Dashboard</h1>
+            <p class="subtitle trn" data-trn="problemStatement">Empowering farmers with predictive pricing, real-time weather analytics, and profit calculation to maximize returns.</p>
+            <div class="team-info">
+                <i class="fa-solid fa-users"></i>
+                <span class="trn" data-trn="teamInfo">Team: Innovators</span>
+            </div>
+            <a href="#dashboard" class="btn primary-btn mt-3 trn" data-trn="tryDemoBtn">Try the Demo</a>
+        </div>
+    </section>
+
+    <!-- 2. Idea & Solution (Interactive Dashboard) -->
+    <section id="dashboard" class="slide slide-dashboard">
+        <div class="section-header">
+            <h2 class="trn" data-trn="dashTitle">Interactive Dashboard</h2>
+            <p class="trn" data-trn="dashSubtitle">Ramesh's View (Wheat Farmer from U.P.)</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- Market Prices & Predictions -->
+            <div class="dash-card prices-card glass">
+                <h3 class="trn" data-trn="mandiPrices">Real-Time Mandi Prices</h3>
+                <div class="price-table-container">
+                    <table class="mandi-table">
+                        <thead>
+                            <tr>
+                                <th class="trn" data-trn="colCrop">Crop</th>
+                                <th class="trn" data-trn="colMandi">Mandi</th>
+                                <th class="trn" data-trn="colPrice">Price (₹/Q)</th>
+                                <th class="trn" data-trn="colTrend">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody id="priceTableBody">
+                            <!-- Populated via API -->
+                            <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h3 class="mt-4 trn" data-trn="pricePrediction">Price Prediction (Wheat)</h3>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dash-sidebar">
+                <!-- Weather Overlay -->
+                <div class="dash-card weather-card glass">
+                    <h3 class="trn" data-trn="weatherOverlay">Weather Overlay</h3>
+                    <div id="weatherWidget" class="weather-widget">
+                        <div class="weather-icon"><i class="fa-solid fa-sun fa-spin-pulse"></i></div>
+                        <div class="weather-info">
+                            <h2 id="wTemp">--°C</h2>
+                            <p id="wLoc">Kanpur</p>
+                            <span class="condition" id="wCond">Clear</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profit Calculator -->
+                <div class="dash-card calculator-card glass">
+                    <h3 class="trn" data-trn="profitCalc">Profit Calculator</h3>
+                    <div class="form-group">
+                        <label class="trn" data-trn="qtyLabel">Yield Quantity (Quintals)</label>
+                        <input type="number" id="calcQty" value="50">
+                    </div>
+                    <div class="form-group">
+                        <label class="trn" data-trn="transportLabel">Transport Cost (₹ total)</label>
+                        <input type="number" id="calcTransport" value="2000">
+                    </div>
+                    <button id="calculateBtn" class="btn secondary-btn trn" data-trn="calcBtn">Calculate Profit</button>
+                    
+                    <div class="calc-result" id="calcResultBox">
+                        <p class="trn" data-trn="estProfit">Estimated Profit:</p>
+                        <h2 id="profitAmount" class="text-green">₹0</h2>
+                    </div>
+                </div>
+                
+                <!-- Community Reporting gamification -->
+                <div class="dash-card community-card glass">
+                    <h3 class="trn" data-trn="communityReport">Community Reporting</h3>
+                    <p class="trn" data-trn="communityDesc">Report today's crowd and conditions to earn badges.</p>
+                    <button id="reportMandiBtn" class="btn outline-btn btn-sm"><i class="fa-solid fa-medal"></i> <span class="trn" data-trn="reportBtn">Report & Earn</span></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Technical Approach -->
+    <section id="approach" class="slide slide-alt">
+        <div class="container">
+            <h2 class="section-title trn" data-trn="techApproach">Technical Approach</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <i class="fa-brands fa-html5"></i>
+                    <h3>Frontend</h3>
+                    <p>Vanilla UI + HTML5/CSS3 + JS</p>
+                    <p>Chart.js for Visualizations</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fa-brands fa-node-js"></i>
+                    <h3>Backend</h3>
+                    <p>Node.js & Express API</p>
+                    <p>REST Architecture</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fa-solid fa-database"></i>
+                    <h3>Data Sources</h3>
+                    <p>Agmarknet Datasets</p>
+                    <p>OpenWeather API</p>
+                </div>
+            </div>
+            <div class="flow-diagram mt-4 glass">
+                <h3 class="text-center">System Flow</h3>
+                <div class="flow-steps">
+                    <span>Data Fetch</span> <i class="fa-solid fa-arrow-right"></i>
+                    <span>Node.js Processing</span> <i class="fa-solid fa-arrow-right"></i>
+                    <span>Prediction Engine</span> <i class="fa-solid fa-arrow-right"></i>
+                    <span>User Interface</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Feasibility & Viability -->
+    <section id="feasibility" class="slide">
+        <div class="container">
+            <h2 class="section-title trn" data-trn="feasibilityTitle">Feasibility & Viability</h2>
+            <div class="glass table-wrapper">
+                <table class="feasibility-table">
+                    <thead>
+                        <tr>
+                            <th>Challenge</th>
+                            <th>Strategy / Mitigation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Digital Literacy among Farmers</td>
+                            <td>Voice commands + Icon-heavy Bilingual Design</td>
+                        </tr>
+                        <tr>
+                            <td>Internet Connectivity</td>
+                            <td>Local caching (Offline Mode) + SMS Alerts</td>
+                        </tr>
+                        <tr>
+                            <td>Data Accuracy & Timeliness</td>
+                            <td>Community cross-referencing & verified Agmarknet fallback</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Impact & Benefits -->
+    <section id="impact" class="slide slide-alt">
+        <div class="container">
+            <h2 class="section-title trn" data-trn="impactTitle">Impact & Benefits</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <i class="fa-solid fa-users-line icon-green"></i>
+                    <h4>Social</h4>
+                    <p>Empowers farmers with data-driven decision making.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-indian-rupee-sign icon-blue"></i>
+                    <h4>Economic</h4>
+                    <p>Minimizes middleman exploitation; increases profit margins by 10-15%.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-leaf icon-yellow"></i>
+                    <h4>Environmental</h4>
+                    <p>Reduces transport wastage by matching crops to nearby, high-demand mandis.</p>
+                </div>
+                <div class="impact-card">
+                    <i class="fa-solid fa-building-columns icon-purple"></i>
+                    <h4>Policy (Govt.)</h4>
+                    <p>Aggregated dashboards assist government in supply chain interventions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Research & References -->
+    <section id="research" class="slide">
+        <div class="container">
+            <h2 class="section-title trn" data-trn="researchTitle">Research & References</h2>
+            <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="dash-card glass">
+                    <h3 class="trn" data-trn="dataSources">Data Sources</h3>
+                    <ul style="line-height: 1.8; list-style-position: inside;">
+                        <li><i class="fa-solid fa-server text-green"></i> <b>Agmarknet (data.gov.in):</b> Historical and real-time mandi prices & arrivals.</li>
+                        <li><i class="fa-solid fa-cloud-sun text-yellow"></i> <b>OpenWeather API:</b> Short-term weather forecasts and alerts.</li>
+                        <li><i class="fa-solid fa-book text-blue"></i> <b>Agricultural Policy Briefs:</b> Government reports on crop fluctuation patterns.</li>
+                    </ul>
+                </div>
+                <div class="dash-card glass">
+                    <h3 class="trn" data-trn="caseStudies">Farmer Case Studies</h3>
+                    <div style="display: flex; gap: 15px; flex-direction: column;">
+                        <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 8px;">
+                            <h4>Ramesh (Wheat, U.P.) <span class="badge" style="float: right; font-size: 0.7em;">Target Persona</span></h4>
+                            <p style="font-size: 0.9em;">Increased margins by timing the Kanpur Mandi market using weather prediction avoidance.</p>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 8px;">
+                            <h4>Kishore (Rice, Bihar)</h4>
+                            <p style="font-size: 0.9em;">Community reporting saved transport costs by avoiding overcrowded local mandis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Floating Widget -->
+    <button id="chatbotBtn" class="chatbot-btn">
+        <i class="fa-solid fa-robot"></i>
+    </button>
+    <div id="chatbotWindow" class="chatbot-window glass hidden">
+        <div class="chatbot-header">
+            <h3><i class="fa-solid fa-seedling"></i> <span class="trn" data-trn="aiMitra">AI Kisan Mitra</span></h3>
+            <button id="closeChatbot" class="btn-clear"><i class="fa-solid fa-times"></i></button>
+        </div>
+        <div id="chatbotMessages" class="chatbot-body">
+            <div class="chat-msg bot-msg">
+                <p class="trn" data-trn="aiWelcome">Hello Ramesh! I am your AI Mandi Assistant. How can I increase your crop yield today?</p>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="..." class="trn-ph" data-trn-ph="askQuestion">
+            <button id="sendChat"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Scripts -->
+    <script src="./js/translations.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
